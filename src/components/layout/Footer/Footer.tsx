@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button";
 export default function Footer() {
   return (
     <footer className="flex flex-col w-full text-white h-auto bg-gradient-to-b from-black to-[#142927] to-95%  relative overflow-x-hidden rounded-tl-4xl">
-      <div className="bg-[#2E1F7A] rounded-tl-4xl z-10 ml-15">
+      <div className="bg-secondary rounded-tl-4xl z-10 ml-15">
         <section className=" m-3 flex sm:flex-row flex-col justify-evenly px-3">
           <div className="flex flex-col gap-1 max-w-full sm:max-w-1/4">
-            <h2 className="text-base font-medium text-[#11C0B8] drop-shadow-lg">
+            <h2 className="text-base font-medium text-primary drop-shadow-lg">
               Sobre Nós
             </h2>
             <p className="text-xs font-light my-1 mb-3 text-justify">
@@ -22,7 +22,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col max-w-full sm:max-w-1/4">
-            <h2 className="text-base font-medium text-[#11C0B8]">Siga-nos</h2>
+            <h2 className="text-base font-medium text-primary">Siga-nos</h2>
             <Button variant="link" className="block m-0 p-0">
               <a
                 href="#"

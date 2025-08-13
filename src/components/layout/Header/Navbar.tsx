@@ -7,7 +7,7 @@ import { Menu } from "lucide-react";
 const Separator: React.FC = () => <span className="mx-5">•</span>;
 
 const navLinkClass =
-  "hover:text-[#11C0BB] text-gray-300 transition-colors duration-200 text-lg py-2";
+  "hover:text-primary text-gray-300 transition-colors duration-200 text-lg py-2";
 export default function Navbar() {
   interface Page {
     endpoint: string;
@@ -104,7 +104,7 @@ export default function Navbar() {
       </span>
 
       {menuOpen && !isAuthPage && (
-        <div className="md:hidden absolute top-15 right-0 mt-2 bg-black border border-[#11D0BB] border-t-black rounded-t-none shadow-lg flex flex-col items-center p-4 z-50 min-w-[160px]">
+        <div className="md:hidden absolute top-15 right-0 mt-2 bg-black border border-primary border-t-black rounded-t-none shadow-lg flex flex-col items-center p-4 z-50 min-w-[160px]">
           {pages.map((page, index) => (
             <div key={`${page.linkName}-${index}`} className="flex my-2">
               <Link
@@ -128,6 +128,7 @@ export default function Navbar() {
             </Button>
 
             <span className="text-white mb-2">ou</span>
+
             <Button className="px-4 py-1">
               <Link to="/cadastro" className="">
                 criar conta
