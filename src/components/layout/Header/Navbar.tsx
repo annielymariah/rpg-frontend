@@ -39,7 +39,7 @@ export default function Navbar() {
           borderImage: "linear-gradient(to right, #2E1F7A, #1C1C2A, #11C0B8) 1",
         }}
       >
-        <Button size="icon">
+        <Button variant="ghost" size="icon">
           {" "}
           <Link to="/">
             <img src={Logo} alt="Logo" />
