@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "@/pages/Landing";
 import LogIn from "@/pages/LogIn";
-
+import SingUp from "@/pages/SingUp";
 import TestingComponents from "@/pages/TestingComponents"
-import SingUp from "@/pages/SingUp/SingUp";
+
 
 
 export const AppRouter = () => {

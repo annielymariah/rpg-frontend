@@ -1,9 +1,9 @@
-import LayoutComponents from "@/components/layout/LayoutComponents";
+import LayoutComponents from "@/components/layout/RootLayout";
 
 export default function Landing() {
   return (
     <LayoutComponents>
-      <p>Teste</p>
+      <h1>Em desenvolvimento :)</h1>
     </LayoutComponents>
   );
 }

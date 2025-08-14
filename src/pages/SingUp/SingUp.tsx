@@ -1,7 +1,8 @@
-import LayoutComponents from "@/components/layout/LayoutComponents";
+import LayoutComponents from "@/components/layout/RootLayout";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 const registerSchema = z
   .object({
@@ -26,14 +28,9 @@ const registerSchema = z
       .min(2, "Email deve ter mais de 2 caracteres")
       .max(100, "Email não pode ter mais de 100 caracteres")
       .email("Por favor, insira um email válido"),
-    masterConfirm: z
-    .boolean()
-    .default(false),
+    masterConfirm: z.boolean(),
     registrationNumber: z
       .string()
-      .regex(/[0-9]/, "Matrícula deve conter apenas números")
-      .min(9, "Matrícula deve ter 9 caracteres")
-      .max(9, "Matrícula deve ter 9 caracteres")
       .optional(),
     phone: z
       .string()
@@ -56,36 +53,25 @@ const registerSchema = z
     message: "Senhas não coincidem",
     path: ["confirmPassword"],
   })
-  .refine(
-    (data) => {
-      const commonSequences = [
-        "123456",
-        "abcdef",
-        "qwerty",
-        "password",
-        "senha123",
-      ];
-      return !commonSequences.some((seq) => data.password.includes(seq));
-    },
-    {
-      message: "Senha muito comum ou fácil de adivinhar",
-      path: ["password"],
-    }
-  )
-  .refine(
-    (data) => {
-      if (data.masterConfirm) {
-        return (
-          data.registrationNumber && data.registrationNumber.trim().length > 0
-        );
+  .superRefine((data, ctx) => {
+    if (data.masterConfirm) {
+      if (!data.registrationNumber || data.registrationNumber.trim() === "") {
+        ctx.addIssue({
+          code: "custom",
+          path: ["registrationNumber"],
+          message: "Número de matrícula é obrigatório para mestres",
+        });
+      } else if (!/^\d{9}$/.test(data.registrationNumber)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["registrationNumber"],
+          message: "Matrícula deve ter exatamente 9 dígitos numéricos",
+        });
       }
-      return true;
-    },
-    {
-      message: "Número de matrícula é obrigatório para mestres",
-      path: ["registrationNumber"],
     }
-  );
+  });
+
+
 
 export default function RegisterPage() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -107,13 +93,16 @@ export default function RegisterPage() {
 
   return (
     <LayoutComponents>
-      <div className="mx-auto max-w-md w-full px-4 py-12">
-        <div className="space-y-6 text-center mb-8">
-          <h1 className="text-3xl text-white">Crie sua conta</h1>
-        </div>
+      <div className="mx-auto max-w-md w-full">
+        <h1 className="w-full text-center text-3xl text-white mb-4">
+          Crie sua conta
+        </h1>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 md:px-0 px-6"
+          >
             {/* Nome Completo */}
             <FormField
               control={form.control}
@@ -164,7 +153,7 @@ export default function RegisterPage() {
                     <Label>Desejo mestrar</Label>
                     <p className="text-muted-foreground text-sm">
                       Ao selecionar esta opção, você confirma que{" "}
-                      <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-l from-primary to-accent bg-clip-text text-transparent">
                         deseja emitir mesas de RPG.
                       </span>
                     </p>
@@ -235,16 +224,19 @@ export default function RegisterPage() {
               )}
             />
 
+            <FormDescription className="flex justify-center gap-1">
+              Já tem uma conta?
+              <Link
+                to={"/login"}
+                className="text-accent hover:text-primary no-underline hover:cursor-pointer"
+              >
+                Faça login
+              </Link>
+            </FormDescription>
+
             <Button type="submit" className="w-full" size="lg">
               Registrar
             </Button>
-
-            <div className="text-center text-sm text-gray-400">
-              Já tem uma conta?{" "}
-              <a href="/login" className="text-accent hover:underline">
-                Faça login
-              </a>
-            </div>
           </form>
         </Form>
       </div>

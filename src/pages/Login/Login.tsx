@@ -1,4 +1,4 @@
-import LayoutComponents from "@/components/layout/LayoutComponents";
+import LayoutComponents from "@/components/layout/RootLayout";
 import {
   Form,
   FormControl,
@@ -13,6 +13,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function LogIn() {
   
@@ -34,16 +35,16 @@ export default function LogIn() {
     },
   });
 
-  function onSubmit() {
-    console.log("Atualizar Login");
+  function onSubmit(values: z.infer<typeof loginSchema>) {
+    console.log(values);
   }
 
   return (
     <LayoutComponents>
-      <div className="flex flex-col w-1xl">
-        <h1 className="text-white w-full flex justify-center">Login</h1>
+      <div className="mx-auto max-w-md w-full">
+        <h1 className="w-full text-center text-3xl text-white mb-4">Login</h1>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 md:px-0 px-6">
             <FormField
               control={form.control}
               name="email"
@@ -81,10 +82,10 @@ export default function LogIn() {
             />
 
             <FormDescription className="flex justify-center gap-1">
-              Não possuí uma conta?{" "}
-              <a className="text-accent hover:text-primary no-underline">
+              Não possuí uma conta?
+              <Link to="/cadastro" className="text-accent hover:text-primary no-underline hover:cursor-pointer">
                 Criar uma conta.
-              </a>
+              </Link>
             </FormDescription>
 
             <Button type="submit" className="w-full">

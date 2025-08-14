@@ -1,4 +1,4 @@
-import LayoutComponents from "@/components/layout/LayoutComponents";
+import LayoutComponents from "@/components/layout/RootLayout";
 
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+
+import { toast } from "sonner"
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -81,6 +83,26 @@ export default function Landing() {
           </form>
         </Form>
       </div>
+
+{/* Toast */}
+
+<div className="flex flex-col w-3/4">
+        <h1 className="text-white">Toast</h1>
+              <Button
+      variant="outline"
+      onClick={() =>
+        toast("Event has been created", {
+          description: "Sunday, December 03, 2023 at 9:00 AM",
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        })
+      }
+    >
+      Show Toast
+    </Button>
+  </div>
     </LayoutComponents>
   );
 }
